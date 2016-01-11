@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Color Game</title>
+		<script>
+			function start_game(){
+				var random_num = Math.random() * 11;
+				var random_num_final = Math.floor(random_num);
+
+				target = random_num_final;
+
+				console.log("Color is: " + color_array[target]);
+
+				while(!finished){
+					guess_input_text=prompt("I am thinking of one of these color: \n\n" +
+											 color_array.join(", ") + "\n\nWhat color am I thinking of?");
+
+					guess_input = color_array.indexOf(guess_input_text);
+					console.log("guess_input: " + guess_input);
+					guesses += 1;
+					finished = check_color();
+				}
+			}
+
+			function check_color(){
+				if (isNaN(guess_input_text)) {
+					if(guess_input <0){
+						alert("Sorry, I don't know that color. Please try again.");
+						return false;
+					}
+					if (guess_input_text>color_array[target]) {
+						alert("Sorry, your guess is not correct!"+
+							"\n\nHint: your color is alphabetically higher than mine."+
+							"\n\nPlease try again.");
+						return false;
+					}
+					if (guess_input_text<color_array[target]) {
+						alert("Sorry, your guess is not correct!"+
+							"\n\nHint: your color is alphabetically lower than mine."+
+							"\n\nPlease try again.");
+						return false;
+					}
+					if (guess_input_text == color_array[target]) {
+						myBody = document.getElementsByTagName("body")[0];
+						myBody.style.background = color_array[target];
+						alert("Congratulations! You have guessed the color!"+
+							"\n\nIt took you " + guesses + " guesses to finish the game!"+
+							"\n\nYou can see the color in the background.");
+						return true;
+					}else{
+						alert("Please try again.");
+						return false;
+					}
+
+				}else{
+					alert("Please enter one of the colors listed above.");
+					return false;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<script>
+		var color_array;
+		var guesses= 0;
+		var guess_input_text;
+		var guess_input;
+		var target;
+		var finished = false;
+
+		color_array = ["blue", "cyan", "gold", "gray", "green", "magenta", "orange", "red", "white", "yellow"];
+
+		start_game();
+		</script>
+	</body>
+<html>
